@@ -18,6 +18,9 @@ namespace DiGi.Log.Classes
         [JsonInclude, JsonPropertyName("LogRecordType")]
         private LogRecordType logRecordType;
 
+        [JsonInclude, JsonPropertyName("Id")]
+        private string id = null;
+
         public LogRecord(LogRecord logRecord)
         {
             if(logRecord != null)
@@ -25,6 +28,7 @@ namespace DiGi.Log.Classes
                 dateTime = logRecord.dateTime;
                 text = logRecord.text;
                 logRecordType = logRecord.LogRecordType;
+                id = logRecord.id;
             }
         }
 
@@ -34,18 +38,29 @@ namespace DiGi.Log.Classes
 
         }
 
-        public LogRecord(DateTime dateTime, LogRecordType logRecordType, string text)
+        public LogRecord(DateTime dateTime, string id, LogRecordType logRecordType, string text)
         {
             this.dateTime = dateTime;
+            this.id = id;
             this.text = text;
             this.logRecordType = logRecordType;
         }
 
-        public LogRecord(LogRecordType logRecordType, string text)
-            : this(DateTime.UtcNow, logRecordType, text)
+        public LogRecord(DateTime dateTime, LogRecordType logRecordType, string text)
+            :this(dateTime, null, logRecordType, text)
         {
-            this.text = text;
-            this.logRecordType = logRecordType;
+        }
+
+        public LogRecord(string id, LogRecordType logRecordType, string text)
+            : this(DateTime.UtcNow, id, logRecordType, text)
+        {
+
+        }
+
+        public LogRecord(LogRecordType logRecordType, string text)
+            : this(DateTime.UtcNow, null, logRecordType, text)
+        {
+
         }
 
         public override ISerializableObject Clone()
@@ -72,6 +87,15 @@ namespace DiGi.Log.Classes
         }
 
         [JsonIgnore]
+        public string Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        [JsonIgnore]
         public LogRecordType LogRecordType
         {
             get
@@ -82,7 +106,14 @@ namespace DiGi.Log.Classes
 
         public override string ToString()
         {
-            return string.Format("{0}\t{1}\t{2}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), Core.Query.Description(logRecordType), text == null ? string.Empty : text);
+            if(id == null)
+            {
+                return string.Format("{0}\t{1}\t{2}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), Core.Query.Description(logRecordType), text == null ? string.Empty : text);
+            }
+            else
+            {
+                return string.Format("{0}\t{1}\t{2}\t{3}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), id, Core.Query.Description(logRecordType), text == null ? string.Empty : text);
+            }
         }
 
         public override int GetHashCode()
