@@ -5,7 +5,7 @@ namespace DiGi.Log
 {
     public static partial class Query
     {
-        public static LogRecordProperties LogRecordProperties(this Enum @enum)
+        public static LogRecordProperties? LogRecordProperties(this Enum? @enum)
         {
             if(@enum == null)
             {

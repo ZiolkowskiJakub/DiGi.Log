@@ -1,4 +1,5 @@
-﻿using DiGi.Core.Interfaces;
+﻿using DiGi.Core;
+using DiGi.Core.Interfaces;
 using DiGi.Log.Enums;
 using DiGi.Log.Interfaces;
 using System;
@@ -12,32 +13,32 @@ namespace DiGi.Log.Classes
     public abstract class Log<T> : Core.Classes.SerializableObject, IEnumerable<T> where T : ILogRecord
     {
         [JsonInclude, JsonPropertyName("LogRecords")]
-        protected List<T> logRecords;
+        protected List<T> logRecords = [];
 
         public Log() 
         { 
         }
 
-        public Log(IEnumerable<T> logRecords)
+        public Log(IEnumerable<T>? logRecords)
         {
-            logRecords = Core.Query.Clone(logRecords);
+            this.logRecords = Core.Query.Clone(logRecords)?.FilterNulls() ?? [];
         }
 
-        public Log(Log<T> log)
+        public Log(Log<T>? log)
         {
             if(log != null)
             {
-                logRecords = Core.Query.Clone(log.logRecords);
+                logRecords = Core.Query.Clone(log.logRecords)?.FilterNulls() ?? [];
             }
         }
 
-        public Log(JsonObject jsonObject)
+        public Log(JsonObject? jsonObject)
             : base(jsonObject)
         {
 
         }
 
-        public override string ToString()
+        public override string? ToString()
         {
             if(logRecords == null)
             {
@@ -54,10 +55,10 @@ namespace DiGi.Log.Classes
 
         public IEnumerator<T> GetEnumerator()
         {
-            return logRecords?.GetEnumerator();
+            return logRecords.GetEnumerator();
         }
 
-        public bool Write(string path)
+        public bool Write(string? path)
         {
             if(string.IsNullOrEmpty(path) || !System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(path)))
             {
@@ -73,7 +74,7 @@ namespace DiGi.Log.Classes
             {
                 System.IO.File.AppendAllText(path, ToString() + Environment.NewLine);
             }
-            catch (Exception exception)
+            catch
             {
                 return false;
             }
@@ -89,19 +90,19 @@ namespace DiGi.Log.Classes
 
         }
 
-        public Log(JsonObject jsonObject)
+        public Log(JsonObject? jsonObject)
             :base(jsonObject)
         {
 
         }
 
-        public Log(IEnumerable<LogRecord> logRecords)
+        public Log(IEnumerable<LogRecord>? logRecords)
             :base(logRecords)
         {
 
         }
 
-        public Log(Log log)
+        public Log(Log? log)
             :base(log)
         {
 
@@ -112,14 +113,14 @@ namespace DiGi.Log.Classes
             return new Log(this);
         }
 
-        public LogRecord Add(LogRecord logRecord)
+        public LogRecord? Add(LogRecord? logRecord)
         {
             if (logRecord == null)
             {
                 return null;
             }
 
-            LogRecord result = Core.Query.Clone(logRecord);
+            LogRecord? result = Core.Query.Clone(logRecord);
             if (result != null)
             {
                 logRecords.Add(result);
@@ -128,17 +129,17 @@ namespace DiGi.Log.Classes
             return logRecord;
         }
 
-        public List<LogRecord> AddRange(IEnumerable<LogRecord> logRecords)
+        public List<LogRecord>? AddRange(IEnumerable<LogRecord>? logRecords)
         {
             if (logRecords == null)
             {
                 return null;
             }
 
-            List<LogRecord> result = new List<LogRecord>();
+            List<LogRecord> result = [];
             foreach (LogRecord logRecord in logRecords)
             {
-                LogRecord logRecord_New = Add(logRecord);
+                LogRecord? logRecord_New = Add(logRecord);
                 if(logRecord_New == null)
                 {
                     continue;
@@ -150,7 +151,7 @@ namespace DiGi.Log.Classes
             return result;
         }
 
-        public LogRecord Add(LogRecordType logRecordType, string format, params object[] values)
+        public LogRecord? Add(LogRecordType logRecordType, string format, params object[] values)
         {
             return Add(Create.LogRecord(logRecordType, format, values));
         }

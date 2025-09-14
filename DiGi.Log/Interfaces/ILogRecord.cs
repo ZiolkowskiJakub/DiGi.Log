@@ -6,9 +6,9 @@ namespace DiGi.Log.Interfaces
 {
     public interface ILogRecord : Core.Interfaces.ISerializableObject
     {
-        string Id { get; }
+        string? Id { get; }
         DateTime DateTime { get; }
-        string Text { get; }
+        string? Text { get; }
         LogRecordType LogRecordType { get; }
     }
 }

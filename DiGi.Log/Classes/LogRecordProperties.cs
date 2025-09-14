@@ -6,24 +6,24 @@ namespace DiGi.Log.Classes
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class LogRecordProperties : Attribute
     {
-        private string id;
-        private string text;
-        private LogRecordType logRecordType;
+        private readonly string? id;
+        private readonly string? text;
+        private readonly LogRecordType logRecordType;
 
-        public LogRecordProperties(LogRecordType logRecordType, string text)
+        public LogRecordProperties(LogRecordType logRecordType, string? text)
             :this(null, logRecordType, text)
         {
 ;
         }
 
-        public LogRecordProperties(string id, LogRecordType logRecordType, string text)
+        public LogRecordProperties(string? id, LogRecordType logRecordType, string? text)
         {
             this.id = id;
             this.logRecordType = logRecordType;
             this.text = text;
         }
 
-        public string Id
+        public string? Id
         {
             get
             {
@@ -31,7 +31,7 @@ namespace DiGi.Log.Classes
             }
         }
 
-        public string Text
+        public string? Text
         {
             get
             {

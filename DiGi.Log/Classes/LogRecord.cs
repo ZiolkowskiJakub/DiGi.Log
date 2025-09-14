@@ -10,18 +10,18 @@ namespace DiGi.Log.Classes
     public class LogRecord : Core.Classes.SerializableObject, ILogRecord
     {
         [JsonInclude, JsonPropertyName("DateTime")]
-        private DateTime dateTime;
+        private readonly DateTime dateTime = DateTime.MinValue;
         
         [JsonInclude, JsonPropertyName("Text")]
-        private string text;
+        private readonly string? text = null;
 
         [JsonInclude, JsonPropertyName("LogRecordType")]
-        private LogRecordType logRecordType;
+        private readonly LogRecordType logRecordType = LogRecordType.Undefined;
 
         [JsonInclude, JsonPropertyName("Id")]
-        private string id = null;
+        private readonly string? id = null;
 
-        public LogRecord(LogRecord logRecord)
+        public LogRecord(LogRecord? logRecord)
         {
             if(logRecord != null)
             {
@@ -32,13 +32,13 @@ namespace DiGi.Log.Classes
             }
         }
 
-        public LogRecord(JsonObject jsonObject)
+        public LogRecord(JsonObject? jsonObject)
             :base(jsonObject)
         {
 
         }
 
-        public LogRecord(DateTime dateTime, string id, LogRecordType logRecordType, string text)
+        public LogRecord(DateTime dateTime, string? id, LogRecordType logRecordType, string? text)
         {
             this.dateTime = dateTime;
             this.id = id;
@@ -46,24 +46,24 @@ namespace DiGi.Log.Classes
             this.logRecordType = logRecordType;
         }
 
-        public LogRecord(DateTime dateTime, LogRecordType logRecordType, string text)
+        public LogRecord(DateTime dateTime, LogRecordType logRecordType, string? text)
             :this(dateTime, null, logRecordType, text)
         {
         }
 
-        public LogRecord(string id, LogRecordType logRecordType, string text)
+        public LogRecord(string? id, LogRecordType logRecordType, string? text)
             : this(DateTime.UtcNow, id, logRecordType, text)
         {
 
         }
 
-        public LogRecord(LogRecordType logRecordType, string text)
+        public LogRecord(LogRecordType logRecordType, string? text)
             : this(DateTime.UtcNow, null, logRecordType, text)
         {
 
         }
 
-        public override ISerializableObject Clone()
+        public override ISerializableObject? Clone()
         {
             return new LogRecord(this);
         }
@@ -78,7 +78,7 @@ namespace DiGi.Log.Classes
         }
 
         [JsonIgnore]
-        public string Text
+        public string? Text
         {
             get
             {
@@ -87,7 +87,7 @@ namespace DiGi.Log.Classes
         }
 
         [JsonIgnore]
-        public string Id
+        public string? Id
         {
             get
             {
@@ -108,11 +108,11 @@ namespace DiGi.Log.Classes
         {
             if(id == null)
             {
-                return string.Format("{0}\t{1}\t{2}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), Core.Query.Description(logRecordType), text == null ? string.Empty : text);
+                return string.Format("{0}\t{1}\t{2}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), Core.Query.Description(logRecordType), text ?? string.Empty);
             }
             else
             {
-                return string.Format("{0}\t{1}\t{2}\t{3}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), id, Core.Query.Description(logRecordType), text == null ? string.Empty : text);
+                return string.Format("{0}\t{1}\t{2}\t{3}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), id, Core.Query.Description(logRecordType), text ?? string.Empty);
             }
         }
 
