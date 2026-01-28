@@ -15,8 +15,8 @@ namespace DiGi.Log.Classes
         [JsonInclude, JsonPropertyName("LogRecords")]
         protected List<T> logRecords = [];
 
-        public Log() 
-        { 
+        public Log()
+        {
         }
 
         public Log(IEnumerable<T>? logRecords)
@@ -26,7 +26,7 @@ namespace DiGi.Log.Classes
 
         public Log(Log<T>? log)
         {
-            if(log != null)
+            if (log != null)
             {
                 logRecords = Core.Query.Clone(log.logRecords)?.FilterNulls() ?? [];
             }
@@ -35,12 +35,11 @@ namespace DiGi.Log.Classes
         public Log(JsonObject? jsonObject)
             : base(jsonObject)
         {
-
         }
 
         public override string? ToString()
         {
-            if(logRecords == null)
+            if (logRecords == null)
             {
                 return null;
             }
@@ -60,12 +59,12 @@ namespace DiGi.Log.Classes
 
         public bool Write(string? path)
         {
-            if(string.IsNullOrEmpty(path) || !System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(path)))
+            if (string.IsNullOrEmpty(path) || !System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(path)))
             {
                 return false;
             }
 
-            if(logRecords == null || logRecords.Count == 0)
+            if (logRecords == null || logRecords.Count == 0)
             {
                 return true;
             }
@@ -87,25 +86,21 @@ namespace DiGi.Log.Classes
     {
         public Log()
         {
-
         }
 
         public Log(JsonObject? jsonObject)
-            :base(jsonObject)
+            : base(jsonObject)
         {
-
         }
 
         public Log(IEnumerable<LogRecord>? logRecords)
-            :base(logRecords)
+            : base(logRecords)
         {
-
         }
 
         public Log(Log? log)
-            :base(log)
+            : base(log)
         {
-
         }
 
         public override ISerializableObject Clone()
@@ -140,7 +135,7 @@ namespace DiGi.Log.Classes
             foreach (LogRecord logRecord in logRecords)
             {
                 LogRecord? logRecord_New = Add(logRecord);
-                if(logRecord_New == null)
+                if (logRecord_New == null)
                 {
                     continue;
                 }

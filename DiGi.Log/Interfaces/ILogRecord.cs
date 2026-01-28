@@ -1,6 +1,5 @@
 ﻿using DiGi.Log.Enums;
 using System;
-using System.Globalization;
 
 namespace DiGi.Log.Interfaces
 {

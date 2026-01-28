@@ -7,7 +7,7 @@ namespace DiGi.Log
     {
         public static LogRecordProperties? LogRecordProperties(this Enum? @enum)
         {
-            if(@enum == null)
+            if (@enum == null)
             {
                 return null;
             }

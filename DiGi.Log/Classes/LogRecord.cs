@@ -11,7 +11,7 @@ namespace DiGi.Log.Classes
     {
         [JsonInclude, JsonPropertyName("DateTime")]
         private readonly DateTime dateTime = DateTime.MinValue;
-        
+
         [JsonInclude, JsonPropertyName("Text")]
         private readonly string? text = null;
 
@@ -23,7 +23,7 @@ namespace DiGi.Log.Classes
 
         public LogRecord(LogRecord? logRecord)
         {
-            if(logRecord != null)
+            if (logRecord != null)
             {
                 dateTime = logRecord.dateTime;
                 text = logRecord.text;
@@ -33,9 +33,8 @@ namespace DiGi.Log.Classes
         }
 
         public LogRecord(JsonObject? jsonObject)
-            :base(jsonObject)
+            : base(jsonObject)
         {
-
         }
 
         public LogRecord(DateTime dateTime, string? id, LogRecordType logRecordType, string? text)
@@ -47,20 +46,18 @@ namespace DiGi.Log.Classes
         }
 
         public LogRecord(DateTime dateTime, LogRecordType logRecordType, string? text)
-            :this(dateTime, null, logRecordType, text)
+            : this(dateTime, null, logRecordType, text)
         {
         }
 
         public LogRecord(string? id, LogRecordType logRecordType, string? text)
             : this(DateTime.UtcNow, id, logRecordType, text)
         {
-
         }
 
         public LogRecord(LogRecordType logRecordType, string? text)
             : this(DateTime.UtcNow, null, logRecordType, text)
         {
-
         }
 
         public override ISerializableObject? Clone()
@@ -106,7 +103,7 @@ namespace DiGi.Log.Classes
 
         public override string ToString()
         {
-            if(id == null)
+            if (id == null)
             {
                 return string.Format("{0}\t{1}\t{2}", dateTime.ToString("yyyy/MM/dd HH:mm:ss.ff"), Core.Query.Description(logRecordType), text ?? string.Empty);
             }

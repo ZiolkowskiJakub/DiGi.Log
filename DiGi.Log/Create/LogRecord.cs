@@ -20,7 +20,7 @@ namespace DiGi.Log
             }
 
             string line = logRecord.ToString();
-            if(line == null)
+            if (line == null)
             {
                 return null;
             }
@@ -28,7 +28,7 @@ namespace DiGi.Log
             System.IO.File.AppendAllLines(path, [logRecord.ToString()]);
             return logRecord;
         }
-        
+
         public static LogRecord? LogRecord(string path, Enum @enum, params object[] values)
         {
             LogRecordProperties? logRecordProperties = Query.LogRecordProperties(@enum);
@@ -42,7 +42,7 @@ namespace DiGi.Log
 
         public static LogRecord? LogRecord(string? id, LogRecordType logRecordType, string? format, params object[]? values)
         {
-            if(format == null)
+            if (format == null)
             {
                 return null;
             }
@@ -56,7 +56,7 @@ namespace DiGi.Log
             {
                 return null;
             }
-            
+
             return new LogRecord(id, logRecordType, text);
         }
 

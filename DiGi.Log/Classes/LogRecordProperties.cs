@@ -11,9 +11,9 @@ namespace DiGi.Log.Classes
         private readonly LogRecordType logRecordType;
 
         public LogRecordProperties(LogRecordType logRecordType, string? text)
-            :this(null, logRecordType, text)
+            : this(null, logRecordType, text)
         {
-;
+            ;
         }
 
         public LogRecordProperties(string? id, LogRecordType logRecordType, string? text)
@@ -46,6 +46,5 @@ namespace DiGi.Log.Classes
                 return logRecordType;
             }
         }
-
     }
 }
