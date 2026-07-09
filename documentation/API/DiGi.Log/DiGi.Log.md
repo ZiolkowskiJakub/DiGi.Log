@@ -1,4 +1,4 @@
-#### [DiGi\.Log](index.md 'index')
+#### [DiGi\.Log](DiGi.Log.Overview.md 'DiGi\.Log\.Overview')
 
 ## DiGi\.Log Namespace
 ### Classes
